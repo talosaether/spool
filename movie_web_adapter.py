@@ -471,18 +471,22 @@ def create_app(repository: MovieRepository) -> Flask:
         }
         .example-link {
             display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 8px 16px;
+            background: #f8f9fa;
+            color: #495057;
+            padding: 8px 12px;
             text-decoration: none;
             border-radius: 4px;
             margin-top: 10px;
-            font-weight: 500;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+            border: 1px solid #dee2e6;
+            word-break: break-all;
         }
         .example-link:hover {
-            background: #218838;
+            background: #e9ecef;
             text-decoration: none;
-            color: white;
+            color: #495057;
+            border-color: #adb5bd;
         }
         .footer {
             text-align: center;
@@ -516,7 +520,7 @@ def create_app(repository: MovieRepository) -> Flask:
     </div>
 
     <h2>🚀 Available API Endpoints</h2>
-    <p>Click the green "Try It" links to test each endpoint with sample data.</p>
+    <p>Click the example URLs to test each endpoint with sample parameters.</p>
 """
 
         # adapter.web.route_documentation -> generate route cards
@@ -540,7 +544,7 @@ def create_app(repository: MovieRepository) -> Flask:
         </div>
         <div class="description">{route_info['description']}</div>
         <div class="parameters"><strong>Parameters:</strong> {route_info['parameters']}</div>
-        <a href="{route_info['example_url']}" class="example-link">Try It →</a>
+        <a href="{route_info['example_url']}" class="example-link">{route_info['example_url']}</a>
     </div>
 """
 
