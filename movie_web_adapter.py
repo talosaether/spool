@@ -420,107 +420,116 @@ def create_app(repository: MovieRepository) -> Flask:
     <title>Movie Catalog API - Documentation</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 1200px;
+            font-family: 'Courier New', monospace;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            line-height: 1.6;
-            background: #f8f9fa;
+            line-height: 1.5;
+            background: #fafafa;
+            color: #333;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 20px;
             margin-bottom: 30px;
             text-align: center;
+            background: #fff;
+        }
+        .ascii-art {
+            font-family: monospace;
+            font-size: 0.8em;
+            line-height: 1.2;
+            color: #666;
+            margin: 15px 0;
         }
         .route-card {
-            background: white;
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid #667eea;
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-left: 3px solid #333;
         }
         .route-method {
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
+            display: inline-block;
+            padding: 2px 6px;
             font-weight: bold;
-            font-size: 0.9em;
-            margin-right: 10px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            border: 1px solid #666;
+            color: #333;
+            background: #f5f5f5;
         }
         .route-path {
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: monospace;
             font-weight: bold;
-            font-size: 1.1em;
+            color: #000;
         }
         .description {
-            color: #666;
-            margin: 10px 0;
+            color: #555;
+            margin: 8px 0;
+            font-size: 0.9em;
         }
         .parameters {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
+            background: #f8f8f8;
+            padding: 8px;
+            margin: 8px 0;
             font-family: monospace;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            border-left: 2px solid #ccc;
         }
         .example-link {
             display: inline-block;
-            background: #f8f9fa;
-            color: #495057;
-            padding: 8px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 10px;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.9em;
-            border: 1px solid #dee2e6;
-            word-break: break-all;
+            background: #f0f0f0;
+            color: #333;
+            padding: 4px 8px;
+            text-decoration: underline;
+            margin-top: 8px;
+            font-family: monospace;
+            font-size: 0.85em;
+            border: 1px solid #ccc;
         }
         .example-link:hover {
-            background: #e9ecef;
-            text-decoration: none;
-            color: #495057;
-            border-color: #adb5bd;
+            background: #e8e8e8;
+            color: #000;
         }
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
+            margin-top: 30px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
             color: #666;
+            font-size: 0.9em;
         }
-        .architecture-badge {
-            display: inline-block;
-            background: #fd7e14;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            margin: 5px;
+        .tech-list {
+            font-family: monospace;
+            color: #555;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🎬 Movie Catalog API</h1>
-        <p>Hexagonal Architecture • REST API • Personal Movie Collection Manager</p>
-        <div>
-            <span class="architecture-badge">Domain-Driven Design</span>
-            <span class="architecture-badge">CQRS</span>
-            <span class="architecture-badge">Ports & Adapters</span>
-            <span class="architecture-badge">Test-Driven</span>
+        <h1>Movie Catalog API</h1>
+        <div class="ascii-art">
+┌─────────────────────────────────────────────┐
+│                                             │
+│   ┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐     │
+│   │ CLI │◄──┤ APP │◄──┤ DOM │──►│ REPO│     │
+│   └─────┘   └─────┘   └─────┘   └─────┘     │
+│       │         │         │         │       │
+│   ┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐     │
+│   │ WEB │◄──┤ SVC │◄──┤ ENT │──►│ MEM │     │
+│   └─────┘   └─────┘   └─────┘   └─────┘     │
+│                                             │
+└─────────────────────────────────────────────┘
         </div>
+        <p>Hexagonal Architecture | REST API | Personal Movie Manager</p>
+        <div class="tech-list">[Domain-Driven] [CQRS] [Ports+Adapters] [72 Tests]</div>
     </div>
 
-    <h2>🚀 Available API Endpoints</h2>
-    <p>Click the example URLs to test each endpoint with sample parameters.</p>
+    <h2>Available Endpoints</h2>
+    <p>Click the URLs below to test each endpoint:</p>
 """
 
         # adapter.web.route_documentation -> generate route cards
@@ -528,38 +537,28 @@ def create_app(repository: MovieRepository) -> Flask:
             method = route_info['route'].split()[0]
             path = route_info['route'].split(' ', 1)[1]
 
-            # adapter.web.method_color -> visual method identification
-            method_color = {
-                'GET': '#28a745',
-                'POST': '#007bff',
-                'PUT': '#ffc107',
-                'DELETE': '#dc3545'
-            }.get(method, '#6c757d')
-
             html_content += f"""
     <div class="route-card">
         <div>
-            <span class="route-method" style="background-color: {method_color}">{method}</span>
+            <span class="route-method">{method}</span>
             <span class="route-path">{path}</span>
         </div>
         <div class="description">{route_info['description']}</div>
-        <div class="parameters"><strong>Parameters:</strong> {route_info['parameters']}</div>
+        <div class="parameters">Params: {route_info['parameters']}</div>
         <a href="{route_info['example_url']}" class="example-link">{route_info['example_url']}</a>
     </div>
 """
 
         html_content += """
     <div class="footer">
-        <h3>🏗️ Architecture Highlights</h3>
-        <p>This API demonstrates <strong>Hexagonal Architecture</strong> principles:</p>
-        <ul style="text-align: left; display: inline-block;">
-            <li><strong>Domain Layer:</strong> Rich Movie entity with business rules</li>
-            <li><strong>Application Services:</strong> Command/Query separation (CQRS)</li>
-            <li><strong>Port Interfaces:</strong> Repository abstraction for storage</li>
-            <li><strong>Adapters:</strong> This Web API + CLI interface</li>
-            <li><strong>Dependency Inversion:</strong> Core depends on abstractions</li>
-        </ul>
-        <p><em>Same business logic accessible via CLI and Web API • 72 comprehensive tests</em></p>
+        <h3>Architecture</h3>
+        <p>Demonstrates Hexagonal Architecture (Ports & Adapters) with:</p>
+        <pre>Domain Layer    → Rich Movie entity with business rules
+Application     → Command/Query services (CQRS)
+Ports          → Repository abstraction interfaces
+Adapters       → Web API + CLI (same business logic)
+Dependencies   → Core depends on abstractions only</pre>
+        <p>72 comprehensive tests | CLI + Web API | Docker ready</p>
     </div>
 </body>
 </html>
