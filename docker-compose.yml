@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  movie-catalog:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mount source code for development hot-reload
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    command: python movie_web_adapter.py
+
+  # Optional: CLI container for running commands
+  movie-cli:
+    build: .
+    volumes:
+      - .:/app
+    command: tail -f /dev/null  # Keep container running
+    profiles:
+      - cli  # Only start with --profile cli
