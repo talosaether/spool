@@ -342,6 +342,228 @@ def create_app(repository: MovieRepository) -> Flask:
             # adapter.web.error.internal -> handle unexpected errors
             return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
+    @app.route('/', methods=['GET'])
+    def index():
+        """
+        Display API documentation with all available routes.
+
+        Returns:
+            HTML page with comprehensive API documentation and examples
+
+        Adapter.Web.Endpoint.Index -> API documentation and route discovery
+        """
+        # adapter.web.documentation -> comprehensive API route listing
+        routes_info = [
+            {
+                "route": "GET /",
+                "description": "API documentation and route listing",
+                "parameters": "None",
+                "example_url": "/"
+            },
+            {
+                "route": "GET /movies",
+                "description": "Retrieve all movies with optional filtering",
+                "parameters": "title (string), year (int), min_rating (float), max_rating (float), tags (comma-separated)",
+                "example_url": "/movies?tags=sci-fi&min_rating=8.0"
+            },
+            {
+                "route": "POST /movies",
+                "description": "Create a new movie entry",
+                "parameters": "JSON body: title (required), year (required), description (required), rating (optional), tags (optional array)",
+                "example_url": "/movies"
+            },
+            {
+                "route": "GET /movies/{id}",
+                "description": "Retrieve a specific movie by its unique ID",
+                "parameters": "id (string) - Movie's unique identifier",
+                "example_url": "/movies/sample-movie-id"
+            },
+            {
+                "route": "PUT /movies/{id}/rating",
+                "description": "Update a movie's rating",
+                "parameters": "id (string), JSON body: rating (float 1.0-10.0)",
+                "example_url": "/movies/sample-movie-id/rating"
+            },
+            {
+                "route": "POST /movies/{id}/tags",
+                "description": "Add a tag to a movie",
+                "parameters": "id (string), JSON body: tag (string)",
+                "example_url": "/movies/sample-movie-id/tags"
+            },
+            {
+                "route": "DELETE /movies/{id}/tags/{tag}",
+                "description": "Remove a specific tag from a movie",
+                "parameters": "id (string), tag (string)",
+                "example_url": "/movies/sample-movie-id/tags/sci-fi"
+            },
+            {
+                "route": "DELETE /movies/{id}",
+                "description": "Delete a movie from the catalog",
+                "parameters": "id (string) - Movie's unique identifier",
+                "example_url": "/movies/sample-movie-id"
+            },
+            {
+                "route": "GET /statistics",
+                "description": "Get comprehensive catalog statistics and analytics",
+                "parameters": "None",
+                "example_url": "/statistics"
+            }
+        ]
+
+        # adapter.web.html_generation -> create interactive documentation
+        html_content = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Catalog API - Documentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .route-card {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        .route-method {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        .route-path {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .description {
+            color: #666;
+            margin: 10px 0;
+        }
+        .parameters {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .example-link {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        .example-link:hover {
+            background: #218838;
+            text-decoration: none;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            color: #666;
+        }
+        .architecture-badge {
+            display: inline-block;
+            background: #fd7e14;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎬 Movie Catalog API</h1>
+        <p>Hexagonal Architecture • REST API • Personal Movie Collection Manager</p>
+        <div>
+            <span class="architecture-badge">Domain-Driven Design</span>
+            <span class="architecture-badge">CQRS</span>
+            <span class="architecture-badge">Ports & Adapters</span>
+            <span class="architecture-badge">Test-Driven</span>
+        </div>
+    </div>
+
+    <h2>🚀 Available API Endpoints</h2>
+    <p>Click the green "Try It" links to test each endpoint with sample data.</p>
+"""
+
+        # adapter.web.route_documentation -> generate route cards
+        for route_info in routes_info:
+            method = route_info['route'].split()[0]
+            path = route_info['route'].split(' ', 1)[1]
+
+            # adapter.web.method_color -> visual method identification
+            method_color = {
+                'GET': '#28a745',
+                'POST': '#007bff',
+                'PUT': '#ffc107',
+                'DELETE': '#dc3545'
+            }.get(method, '#6c757d')
+
+            html_content += f"""
+    <div class="route-card">
+        <div>
+            <span class="route-method" style="background-color: {method_color}">{method}</span>
+            <span class="route-path">{path}</span>
+        </div>
+        <div class="description">{route_info['description']}</div>
+        <div class="parameters"><strong>Parameters:</strong> {route_info['parameters']}</div>
+        <a href="{route_info['example_url']}" class="example-link">Try It →</a>
+    </div>
+"""
+
+        html_content += """
+    <div class="footer">
+        <h3>🏗️ Architecture Highlights</h3>
+        <p>This API demonstrates <strong>Hexagonal Architecture</strong> principles:</p>
+        <ul style="text-align: left; display: inline-block;">
+            <li><strong>Domain Layer:</strong> Rich Movie entity with business rules</li>
+            <li><strong>Application Services:</strong> Command/Query separation (CQRS)</li>
+            <li><strong>Port Interfaces:</strong> Repository abstraction for storage</li>
+            <li><strong>Adapters:</strong> This Web API + CLI interface</li>
+            <li><strong>Dependency Inversion:</strong> Core depends on abstractions</li>
+        </ul>
+        <p><em>Same business logic accessible via CLI and Web API • 72 comprehensive tests</em></p>
+    </div>
+</body>
+</html>
+"""
+
+        # adapter.web.response.documentation -> return interactive HTML documentation
+        return html_content
+
     # adapter.web.error_handlers -> global error handling
     @app.errorhandler(404)
     def not_found_error(error):
