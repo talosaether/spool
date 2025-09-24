@@ -8,9 +8,9 @@
 
 ```bash
 # Clone and start the web API
-git clone <repository-url>
-cd movie-catalog
-docker-compose up
+git clone https://github.com/talosaether/spool.git
+cd spool
+docker compose up
 
 # Web API available at http://localhost:5000
 curl http://localhost:5000/movies
@@ -176,16 +176,16 @@ This project was built using [Shape Up](https://basecamp.com/shapeup) principles
 
 ```bash
 # Start web API
-docker-compose up
+docker compose up
 
 # Run tests in container
-docker-compose run movie-catalog pytest -v
+docker compose run movie-catalog pytest -v
 
 # Use CLI in container
-docker-compose --profile cli run movie-cli python movie_cli.py --help
+docker compose --profile cli run movie-cli python movie_cli.py --help
 
 # Clean up
-docker-compose down
+docker compose down
 ```
 
 ## 📚 Learn More
